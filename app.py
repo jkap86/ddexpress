@@ -1,3 +1,4 @@
+from operator import truediv
 import os
 from flask import Flask, session, request
 from flask_session import Session
@@ -6,7 +7,7 @@ import concurrent.futures
 import itertools
 
 app = Flask(__name__, static_folder='build/', static_url_path='/')
-app.debug = 'DEBUG' in os.environ
+app.debug = True
 app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
@@ -41,12 +42,12 @@ def getLeagues(username):
             league['users'] = users
             league['rosters'] = rosters
             roster = next(
-                x for x in rosters if x['owner_id'] == user['user_id'])
+                x for x in rosters if x['owner_id'] == user['user_id'] or (x['co_owners'] != None and user['user_id'] in x['co_owners']))
             league['wins'] = roster['settings']['wins']
             league['losses'] = roster['settings']['losses']
             league['ties'] = roster['settings']['ties']
             league['fpts'] = float(
-                str(roster['settings']['fpts']) + "." + str(roster['settings']['fpts_decimal']))
+                str(roster['settings']['fpts']))
             league['fpts_against'] = float(str(
                 roster['settings']['fpts_against']) + "." + str(roster['settings']['fpts_against_decimal']))
             league['dynasty'] = 'Dynasty' if league['settings']['type'] == 2 else 'Redraft'
@@ -56,9 +57,11 @@ def getLeagues(username):
             return league
 
         with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
-            leagues = list(executor.map(getLeagueInfo, leagues))
-            session['leagues'] = leagues
-            session['user'] = user
+            
+                leagues = list(executor.map(getLeagueInfo, leagues))
+                session['leagues'] = leagues
+                session['user'] = user
+            
         return {
             'leagues': leagues,
             'user': user
@@ -118,7 +121,7 @@ def getPlayerShares():
                                                                              'wins': y['settings']['wins'],
                                                                              'losses': y['settings']['losses'],
                                                                              'ties': y['settings']['ties'],
-                                                                             'fpts': float(str(y['settings']['fpts']) + "." + str(y['settings']['fpts_decimal'])),
+                                                                             'fpts': float(str(y['settings']['fpts'])),
                                                                              'fpts_against': float(str(y['settings']['fpts_against']) + "." + str(y['settings']['fpts_against_decimal']))
                                                                          }, y['players'])), x['rosters'])), leagues))
 
