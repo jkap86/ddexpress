@@ -49,7 +49,7 @@ def getLeagues(username):
             league['fpts'] = float(
                 str(roster['settings']['fpts']))
             league['fpts_against'] = float(str(
-                roster['settings']['fpts_against']) + "." + str(roster['settings']['fpts_against_decimal']))
+                roster['settings']['fpts_against']) + "." + str(roster['settings']['fpts_against_decimal'])) if 'fpts_against' in roster['settings'].keys() else 0
             league['dynasty'] = 'Dynasty' if league['settings']['type'] == 2 else 'Redraft'
             league['bestball'] = 'Bestball' if ('best_ball' in league['settings'].keys(
             ) and league['settings']['best_ball'] == 1) else 'Standard'
@@ -122,7 +122,7 @@ def getPlayerShares():
                                                                              'losses': y['settings']['losses'],
                                                                              'ties': y['settings']['ties'],
                                                                              'fpts': float(str(y['settings']['fpts'])),
-                                                                             'fpts_against': float(str(y['settings']['fpts_against']) + "." + str(y['settings']['fpts_against_decimal']))
+                                                                             'fpts_against': float(str(y['settings']['fpts_against']) + "." + str(y['settings']['fpts_against_decimal'])) if 'fpts_against' in y['settings'].keys() else 0
                                                                          }, y['players'])), x['rosters'])), leagues))
 
     players = list(itertools.chain(*list(itertools.chain(*players))))
@@ -144,7 +144,7 @@ def getPlayerShares():
             'losses': x['losses'],
             'ties': x['ties'],
             'fpts': x['fpts'],
-            'fpts_against': x['fpts_against']
+            'fpts_against': x['fpts_against'] 
         } for x in players if x['id'] == player['id'] and (x['manager_id'] != [] and x['manager_id'][0] == user['user_id'])]
         player['leagues_taken'] = [{
             'league_name': x['league_name'],
