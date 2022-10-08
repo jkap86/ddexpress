@@ -42,7 +42,7 @@ const Leagues = (props) => {
                 Rank
             </td>
             <td>
-                Rank (Points)
+                Rank (PF)
             </td>
             <td>
                 Teams
@@ -68,12 +68,9 @@ const Leagues = (props) => {
                 </span>
             </td>
             <td colSpan={2}>
-                <p>
-                    {
-                        `${league.wins}-${league.losses}${league.ties > 0 ? league.ties : ''}`
-                    }
-
-                </p>
+                {
+                    `${league.wins}-${league.losses}${league.ties > 0 ? league.ties : ''}`
+                }
                 &nbsp;&nbsp;
                 <em>
                     {
@@ -83,12 +80,12 @@ const Leagues = (props) => {
             </td>
             <td colSpan={2}>
                 <p>
-                    {
-                        league.fpts
+                    PF: {
+                        league.fpts.toLocaleString("en-US")
                     }
-                    -
-                    {
-                        league.fpts_against
+                    <br />
+                    PA: {
+                        league.fpts_against.toLocaleString("en-US")
                     }
                 </p>
             </td>
