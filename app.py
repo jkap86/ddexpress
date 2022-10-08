@@ -112,6 +112,7 @@ def getPlayerShares():
                                                                              'name': allplayers[z] if z in allplayers.keys() else z,
                                                                              'league_id': x['league_id'],
                                                                              'league_name': x['name'],
+                                                                             'league_avatar': x['avatar'],
                                                                              'manager': [m['display_name'] for m in x['users'] if m['user_id'] == y['owner_id'] or (y['co_owners'] != None and m['user_id'] in y['co_owners'])],
                                                                              'manager_id': [m['user_id'] for m in x['users'] if m['user_id'] == y['owner_id'] or (y['co_owners'] != None and m['user_id'] in y['co_owners'])],
                                                                              'wins': y['settings']['wins'],
@@ -134,6 +135,7 @@ def getPlayerShares():
     def addLeagues(player):
         player['leagues_owned'] = [{
             'league_name': x['league_name'],
+            'league_avatar': x['league_avatar'],
             'manager': x['manager'],
             'wins': x['wins'],
             'losses': x['losses'],
@@ -143,6 +145,7 @@ def getPlayerShares():
         } for x in players if x['id'] == player['id'] and (x['manager_id'] != [] and x['manager_id'][0] == user['user_id'])]
         player['leagues_taken'] = [{
             'league_name': x['league_name'],
+            'league_avatar': x['league_avatar'],
             'manager': x['manager']
         } for x in players if x['id'] == player['id'] and (x['manager_id'] == [] or x['manager_id'][0] != user['user_id'])]
         return player

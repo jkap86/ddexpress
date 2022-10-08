@@ -153,7 +153,7 @@ const View = () => {
         case 'Player Shares':
             display = (isLoading_PlayerShares ? <h1>Loading...</h1> :
                 <PlayerShares
-                    player_shares={statePlayerShares}
+                    playerShares={statePlayerShares}
                     avatar={avatar}
                 />
             )
@@ -163,6 +163,7 @@ const View = () => {
                 <Leaguemates
                     leaguemates={stateLeaguemates}
                     user_id={stateUser.user_id}
+                    username={stateUser.display_name}
                     avatar={avatar}
                 />
             )
@@ -198,14 +199,18 @@ const View = () => {
                     Home
                 </a>
             </Link>
-            <h2>
-                {
-                    avatar(stateUser.avatar, stateUser.username, 'user')
-                }
-                {
-                    params.username
-                }
-            </h2>
+            <h1>
+                <p className="image">
+                    {
+                        avatar(stateUser.avatar, stateUser.username, 'user')
+                    }
+                    <strong>
+                        {
+                            stateUser.display_name
+                        }
+                    </strong>
+                </p>
+            </h1>
             <div className="navbar">
                 <button
                     className={tab === 'Leagues' ? 'active switch clickable' : 'switch clickable'}

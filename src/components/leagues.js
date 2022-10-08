@@ -1,7 +1,14 @@
-
+import { useState, useEffect } from "react"
 
 const Leagues = (props) => {
-    const rank = props.leagues.map(league => {
+    const [leagues, setLeagues] = useState([])
+
+    useEffect(() => {
+        setLeagues(props.leagues)
+    }, [props])
+    console.log(leagues)
+
+    leagues.map(league => {
         const standings = league.rosters.sort((a, b) =>
             b.settings.wins - a.settings.wins || b.settings.losses - a.settings.losses ||
             b.settings.fpts - a.settings.fpts
@@ -22,7 +29,7 @@ const Leagues = (props) => {
 
     const header = (
         <tr className="main_header">
-            <td colSpan={5}>
+            <td colSpan={3}>
                 League
             </td>
             <td colSpan={2}>
@@ -43,20 +50,22 @@ const Leagues = (props) => {
         </tr>
     )
 
-    const display = props.leagues.map((league, index) =>
+    const display = leagues.map((league, index) =>
         <tr
             key={`${league.league_id}_${index}`}
             className="grid-container"
         >
-            <td>
-                {
-                    props.avatar(league.avatar, league.name, 'league')
-                }
-            </td>
-            <td colSpan={4}>
-                {
-                    league.name
-                }
+            <td colSpan={3}>
+                <span className="image">
+                    {
+                        props.avatar(league.avatar, league.name, 'league')
+                    }
+                    <strong>
+                        {
+                            league.name
+                        }
+                    </strong>
+                </span>
             </td>
             <td colSpan={2}>
                 <p>
@@ -65,6 +74,7 @@ const Leagues = (props) => {
                     }
 
                 </p>
+                &nbsp;&nbsp;
                 <em>
                     {
                         (league.wins / (league.wins + league.losses + league.ties)).toLocaleString("en-US", { maximumFractionDigits: 4, minimumFractionDigits: 4 })
@@ -101,55 +111,79 @@ const Leagues = (props) => {
     )
 
     const totals = (
-        <h3>
-            {
-                props.leagues.reduce((acc, cur) => acc + cur.wins, 0)
-            }
-            -
-            {
-                props.leagues.reduce((acc, cur) => acc + cur.losses, 0)
-            }
-            {
-                props.leagues.reduce((acc, cur) => acc + cur.ties, 0) > 0 ?
-                    `-${props.leagues.reduce((acc, cur) => acc + cur.ties, 0)}` :
-                    null
-            }
-            &nbsp;
-            <em>
-                {
-                    (
-                        props.leagues.reduce((acc, cur) => acc + cur.wins, 0) /
-                        props.leagues.reduce((acc, cur) => acc + cur.wins + cur.losses + cur.ties, 0)
-                    ).toLocaleString("en-US", {
-                        maximumFractionDigits: 4,
-                        minimumFractionDigits: 4
-                    })
-                }
-            </em>
-            <br />
-            {
-                props.leagues.reduce((acc, cur) => acc + cur.fpts, 0).toLocaleString("en-US", {
-                    maximumFractionDigits: 2
-                })
-            } pts
-            &nbsp;-&nbsp;
-            {
-                props.leagues.reduce((acc, cur) => acc + cur.fpts_against, 0).toLocaleString("en-US", {
-                    maximumFractionDigits: 2
-                })
-            } pts
-        </h3>
+        <table className="summary">
+            <tbody>
+                <tr className="bold">
+                    <td colSpan={6}>{props.leagues.length} Leagues</td>
+                </tr>
+                <tr>
+                    <th>W</th>
+                    <th>L</th>
+                    <th>T</th>
+                    <th>WPCT</th>
+                    <th>Pts For</th>
+                    <th>Pts Against</th>
+                </tr>
+                <tr>
+                    <td>
+                        {
+                            props.leagues.reduce((acc, cur) => acc + cur.wins, 0)
+                        }
+                    </td>
+                    <td>
+                        {
+                            props.leagues.reduce((acc, cur) => acc + cur.losses, 0)
+                        }
+                    </td>
+                    <td>
+                        {
+                            props.leagues.reduce((acc, cur) => acc + cur.ties, 0)
+                        }
+                    </td>
+                    <td>
+                        <em>
+                            {
+                                (
+                                    props.leagues.reduce((acc, cur) => acc + cur.wins, 0) /
+                                    props.leagues.reduce((acc, cur) => acc + cur.wins + cur.losses + cur.ties, 0)
+                                ).toLocaleString("en-US", {
+                                    maximumFractionDigits: 4,
+                                    minimumFractionDigits: 4
+                                })
+                            }
+                        </em>
+                    </td>
+                    <td>
+                        {
+                            props.leagues.reduce((acc, cur) => acc + cur.fpts, 0).toLocaleString("en-US", {
+                                maximumFractionDigits: 2
+                            })
+                        } pts
+                    </td>
+                    <td>
+                        {
+                            props.leagues.reduce((acc, cur) => acc + cur.fpts_against, 0).toLocaleString("en-US", {
+                                maximumFractionDigits: 2
+                            })
+                        } pts
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     )
 
     return <>
-        <h1>{props.leagues.length} Leagues</h1>
-        {totals}
-        <table className="main leagues">
-            <tbody>
-                {header}
-                {display}
-            </tbody>
-        </table>
+        <div className="summary">
+            {totals}
+        </div>
+        <div className="scrollable">
+            <table className="main leagues">
+                <tbody>
+                    {header}
+                    {display}
+                </tbody>
+            </table>
+        </div>
     </>
 }
 

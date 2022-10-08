@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import sleeperLogo from '../images/sleeper_icon.png';
 
 const Homepage = () => {
     const [username, setUsername] = useState('')
@@ -20,8 +21,18 @@ const Homepage = () => {
     }
 
     return <>
-        <h1 className='home'>Dynasty Dashboard</h1>
-
+        <h1>
+            <p className="image">
+                <img
+                    alt='sleeper_logo'
+                    className='thumbnail'
+                    src={sleeperLogo}
+                />
+                <strong>
+                    Sleeper Dashboard
+                </strong>
+            </p>
+        </h1>
         <div className="username_search_wrapper">
             <input
                 className='home'
@@ -31,7 +42,7 @@ const Homepage = () => {
             />
             <Link to={`/${username}`}>
                 <button
-                    className='home'
+                    className='home clickable'
                 >
                     Submit
                 </button>
