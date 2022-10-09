@@ -37,18 +37,21 @@ h1.home {
 }
 
 table.summary {
-  color: var(--color2);
+  color: var(--color5);
   font-size: 110%;
   width: fit-content;
   margin: auto;
-  background-color: var(--color2);
+  background-color: var(--color5);
   box-shadow: inset 0 0 .05em var(--color1);
   padding: .05em;
+  border-spacing: .25em;
 }
 
 table.summary td,
 table.summary th {
-  background-color: var(--color5);
+  background-color: var(--color2);
+  box-shadow: inset 0 0 .75em var(--color1);
+  padding: .25em;
 }
 
 .clickable {
@@ -60,18 +63,13 @@ table.summary th {
   height: 90%;
 }
 
-.main_header {
-  position: sticky;
-  top: 0;
-  z-index: 2;
-}
-
 .main_row_active {
   position: sticky;
   top: 2em;
   z-index: 5;
   filter: invert(15%);
   background-color: var(--color3);
+  color: var(--color2);
 }
 
 input.home {
@@ -108,8 +106,12 @@ table.main {
   text-align: center;
   color: var(--color2);
   font-weight: 900;
-  background-color: var(--color3);
+  background-color: var(--color5);
+  box-shadow: inset 0 0 .5em var(--color2);
   filter: invert(10%);
+  position: sticky;
+  top: 0;
+  z-index: 2;
 }
 
 p.image,
@@ -131,19 +133,21 @@ p.image>strong {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: var(--color6);
+  color: white;
   filter: brightness(2);
-  background-color: rgba(0, 0, 0, .25);
-  text-shadow: 0 0 .5em var(--color1);
-  width: 100%;
+  text-shadow: 0 0 .5em var(--color5);
+  width: fit-content;
+  max-width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  text-align: left;
 }
 
-.image>strong:hover {
-  width: fit-content;
+span.image:hover>strong {
+  overflow: visible;
   background-color: black;
+  color: var(--color2);
 }
 
 .image>img.thumbnail {
@@ -151,8 +155,8 @@ p.image>strong {
 }
 
 img.thumbnail {
-  width: 2em;
-  height: 2em;
+  width: 3em;
+  height: 3em;
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 0 1em var(--color2);
@@ -168,7 +172,7 @@ button.switch.active {
 }
 
 button.switch {
-  background-color: darkblue;
+  background-color: var(--color5);
   color: white;
   padding: 1em;
   font-weight: 900;
@@ -210,8 +214,8 @@ table.main td {
   background-color: navy;
 }
 
-td,
-th {
+table.main td,
+table.main th {
   box-shadow: inset 0 0 .75em var(--color1);
   text-align: center;
   padding: .25em;
@@ -219,12 +223,13 @@ th {
 
 th {
   font-weight: 900;
+  height: fit-content;
 }
 
 td>p {
   text-align: left;
-  width: fit-content;
-  margin: auto;
+  width: 80%;
+  margin: .25em auto;
 }
 
 .leaguemate {

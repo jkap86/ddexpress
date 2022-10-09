@@ -1,5 +1,3 @@
-from operator import truediv
-import os
 from flask import Flask, session, request
 from flask_session import Session
 import requests

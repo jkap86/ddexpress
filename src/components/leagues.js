@@ -29,24 +29,24 @@ const Leagues = (props) => {
 
     const header = (
         <tr className="main_header">
-            <td colSpan={3}>
+            <th colSpan={3}>
                 League
-            </td>
-            <td colSpan={2}>
+            </th>
+            <th colSpan={2}>
                 Record
-            </td>
-            <td colSpan={2}>
+            </th>
+            <th colSpan={2}>
                 PF - PA
-            </td>
-            <td>
+            </th>
+            <th>
                 Rank
-            </td>
-            <td>
+            </th>
+            <th>
                 Rank (PF)
-            </td>
-            <td>
+            </th>
+            <th>
                 Teams
-            </td>
+            </th>
         </tr>
     )
 
@@ -57,9 +57,12 @@ const Leagues = (props) => {
         >
             <td colSpan={3}>
                 <span className="image">
-                    {
-                        props.avatar(league.avatar, league.name, 'league')
-                    }
+                    <p>
+                        {
+                            props.avatar(league.avatar, league.name, 'league')
+                        }
+                    </p>
+
                     <strong>
                         {
                             league.name
@@ -83,7 +86,8 @@ const Leagues = (props) => {
                     PF: {
                         league.fpts.toLocaleString("en-US")
                     }
-                    <br />
+                </p>
+                <p>
                     PA: {
                         league.fpts_against.toLocaleString("en-US")
                     }
