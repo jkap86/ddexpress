@@ -141,13 +141,14 @@ p.image>strong {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
-  text-align: left;
 }
 
 span.image:hover>strong {
   overflow: visible;
   background-color: black;
   color: var(--color2);
+  width: fit-content;
+  max-width: unset;
 }
 
 .image>img.thumbnail {
